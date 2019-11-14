@@ -1,0 +1,32 @@
+#! /bin/env tclsh
+
+package require Tk
+
+label .disptitle -text "Display Name:"
+
+entry .dispname -bg white
+
+label .offtitle -text "Official Name:"
+
+entry .offname -bg white
+
+button .prog -text {name goes here}
+pack .prog .disptitle .dispname .offtitle .offname -fill both
+
+
+bind .offname <Key-Return> {
+    set dispname [.dispname get]
+    set offname [.offname get]
+    .prog configure -text $dispname
+    .dispname delete 0 end
+    .offname delete 0 end
+    focus .dispname
+}
+
+
+.prog configure -command {
+    eval exec $offname &
+}
+
+
+

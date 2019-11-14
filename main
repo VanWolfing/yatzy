@@ -1,0 +1,44 @@
+#! /bin/env tclsh
+
+package require Tk
+package require tablelist
+namespace import tablelist::*
+
+proc create_table no_players {
+	set player_list [list {} ]
+	entry .player_name -bg white -textvariable player_name
+	pack .player_name -fill both
+
+
+	bind .player_name <Key-Return> {
+		lappend player_list $player_name
+		.player_name delete 0 end
+
+	}
+	puts $player_list
+	tablelist .t -columntitles $player_list  -stretch all -background white
+	pack .t -fill both -expand 1 -side top
+}
+
+
+proc init {} {
+	label .player_no_text -text {Number of players:}
+	entry .player_no -bg white
+	button .init -text {Done}
+	pack .player_no_text .player_no .player_no .init -fill both
+
+	bind .player_no <Key-Return> {
+		set no_players [.player_no get]
+		create_table $no_players
+	}
+}
+
+
+proc main {} {
+	# Initialise game -> Set up the number of players, create the table
+	# Keep track of the points
+	init
+}
+
+
+main
